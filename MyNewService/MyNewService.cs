@@ -10,15 +10,26 @@ using System.Threading.Tasks;
 
 namespace MyNewService
 {
-    public partial class Service1 : ServiceBase
+    public partial class MyNewService : ServiceBase
     {
-        public Service1()
+        public MyNewService()
         {
             InitializeComponent();
+            eventLog1 = new System.Diagnostics.EventLog();
+            if(!System.Diagnostics.EventLog.Exists("MySource"))
+            {
+
+                System.Diagnostics.EventLog.CreateEventSource("MySource","MyNewLog");
+
+            }
+
+            eventLog1.Source="Mysource";
+            eventLog1.Log="MyNewLog";
         }
 
         protected override void OnStart(string[] args)
         {
+            eventLog1.WriteEntry("In OnStart");
         }
 
         protected override void OnStop()
